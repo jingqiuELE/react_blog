@@ -85,6 +85,6 @@ app.post('/api/blogs', (req, res) => {
 });
 
 
-app.listen(app.get('port'), function() {
+app.listen(app.get('port'), () => {
   console.log('Server started: http://localhost:' + app.get('port') + '/');
 });
