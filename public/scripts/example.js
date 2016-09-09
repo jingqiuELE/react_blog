@@ -18,11 +18,13 @@ var Comment = React.createClass({
   },
 
   render: function() {
+    var d = new Date(this.props.date);
     return (
       <div className="comment">
         <h2 className="commentAuthor">
           {this.props.author}
         </h2>
+        {d.toString()}
         <span dangerouslySetInnerHTML={this.rawMarkup()} />
       </div>
     );
@@ -87,7 +89,7 @@ var CommentList = React.createClass({
   render: function() {
     var commentNodes = this.props.data.map(function(comment) {
       return (
-        <Comment author={comment.author} key={comment.id}>
+        <Comment author={comment.author} date={comment.id} key={comment.id}>
           {comment.text}
         </Comment>
       );
@@ -142,6 +144,6 @@ var CommentForm = React.createClass({
 });
 
 ReactDOM.render(
-  <CommentBox url="/api/comments" pollInterval={2000} />,
+  <CommentBox url="/api/blogs" pollInterval={10000} />,
   document.getElementById('content')
 );
