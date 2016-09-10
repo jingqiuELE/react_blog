@@ -21,8 +21,8 @@ var Blog = React.createClass({
     var d = new Date(this.props.date);
     return (
       <div className="blog">
-        <h2 className="blogAuther">
-          {this.props.author}
+        <h2 className="blogTitle">
+          {this.props.title}
         </h2>
         {d.toString()}
         <span dangerouslySetInnerHTML={this.rawMarkup()} />
@@ -89,7 +89,7 @@ var BlogList = React.createClass({
   render: function() {
     var blogNodes = this.props.data.map(function(blog) {
       return (
-        <Blog author={blog.author} date={blog.id} key={blog.id}>
+        <Blog date={blog.id} key={blog.id} title={blog.title}>
           {blog.text}
         </Blog>
       );
@@ -104,10 +104,7 @@ var BlogList = React.createClass({
 
 var BlogForm = React.createClass({
   getInitialState: function() {
-      return {author: '', title: '', text: ''};
-  },
-  handleAuthorChange: function(e) {
-      this.setState({author: e.target.value});
+      return {title: '', text: ''};
   },
   handleTitleChange: function(e) {
       this.setState({title: e.target.value});
@@ -117,24 +114,17 @@ var BlogForm = React.createClass({
   },
   handleSubmit: function(e) {
     e.preventDefault();
-    var author = this.state.author.trim();
     var title = this.state.title.trim();
     var text = this.state.text.trim();
-    if (!text || !author || !title) {
+    if (!text || !title) {
       return;
     }
-    this.props.onBlogSubmit({author: author, title: title, text: text});
-    this.setState({author: '', title: '', text: ''});
+    this.props.onBlogSubmit({title: title, text: text});
+    this.setState({title: '', text: ''});
   },
   render: function() {
     return (
       <form className="blogForm" onSubmit={this.handleSubmit}>
-        <input
-          type="text"
-          placeholder="Your name"
-          value={this.state.author}
-          onChange={this.handleAuthorChange}
-        />
         <input
           type="text"
           placeholder="Title..."
