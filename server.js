@@ -72,7 +72,7 @@ app.post('/api/blogs', (req, res) => {
     assert.equal(null, err);
     var newBlog = {
       id: Date.now(),
-      author: req.body.author,
+      title: req.body.title,
       text: req.body.text,
     };
     insertDocuments(db, newBlog, (err, result) => {
@@ -85,6 +85,6 @@ app.post('/api/blogs', (req, res) => {
 });
 
 
-app.listen(app.get('port'), function() {
+app.listen(app.get('port'), () => {
   console.log('Server started: http://localhost:' + app.get('port') + '/');
 });
