@@ -57,3 +57,9 @@ p, ul {
 ul {
   padding-left: 30px;
 }
+
+.newblog {
+  background-color: LightBlue;
+  width: 200px;
+  height: 50px;
+}

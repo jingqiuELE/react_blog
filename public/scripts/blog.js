@@ -131,12 +131,15 @@ var BlogForm = React.createClass({
           value={this.state.title}
           onChange={this.handleTitleChange}
         />
-        <input
-          type="text"
+        <br />
+        <textarea
+          name="blog"
+          className="newblog"
           placeholder="Say something..."
           value={this.state.text}
           onChange={this.handleTextChange}
         />
+        <br />
         <input type="submit" value="Post" />
       </form>
     );
