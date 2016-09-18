@@ -77,8 +77,11 @@ var BlogBox = React.createClass({
   },
   render: function() {
     return (
-      <div className="blogBox">
-        <h1>Blogs</h1>
+      <div className="container">
+        <div className="blog-header">
+          <h1 className="blog-title">Blogs</h1>
+          <p className="lead blog-description">Blogs implemented using React</p>
+        </div>
         <BlogList data={this.state.data} />
         <BlogForm onBlogSubmit={this.handleBlogSubmit} />
       </div>
