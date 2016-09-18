@@ -20,11 +20,12 @@ var Blog = React.createClass({
   render: function() {
     var d = new Date(this.props.date);
     return (
-      <div className="blog">
-        <h2 className="blogTitle">
-          {this.props.title}
-        </h2>
-        {d.toString()}
+      <div className="blog-post">
+        <h2 className="blog-post-title">{this.props.title}</h2>
+        <p className="blog-post-meta">
+            {d.toString()}
+            <a href='#'></a>
+        </p>
         <span dangerouslySetInnerHTML={this.rawMarkup()} />
       </div>
     );
@@ -95,8 +96,10 @@ var BlogList = React.createClass({
       );
     });
     return (
-      <div className="blogList">
+      <div className="row">
+        <div className="col-sm-8 blog-main">
         {blogNodes}
+        </div>
       </div>
     );
   }
@@ -131,12 +134,15 @@ var BlogForm = React.createClass({
           value={this.state.title}
           onChange={this.handleTitleChange}
         />
-        <input
-          type="text"
+        <br />
+        <textarea
+          name="blog"
+          className="newblog"
           placeholder="Say something..."
           value={this.state.text}
           onChange={this.handleTextChange}
         />
+        <br />
         <input type="submit" value="Post" />
       </form>
     );
