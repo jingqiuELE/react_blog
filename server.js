@@ -14,17 +14,16 @@ var fs = require('fs');
 var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
-var app = express();
+var BlogDB = require('./blog');
 
-var COMMENTS_FILE = path.join(__dirname, 'comments.json');
-var MongoClient = require('mongodb').MongoClient
-  , assert = require('assert');
+var app = express();
+var DBNAME = "myblog";
+var blogdb = new BlogDB({database: DBNAME});
  
  
-var mongo_url = 'mongodb://localhost:27017/myproject';
 
 var insertDocuments = function(db, docs, callback) {
-  var collection = db.collection('documents');
+  var collection = db.collection('blogs');
   collection.insert(docs, function(err, result) {
     assert.equal(err, null);
     console.log("Inserted %d documents into the document collection", docs.length);
@@ -33,7 +32,7 @@ var insertDocuments = function(db, docs, callback) {
 }
 
 var findDocuments = function(db, callback) {
-  var collection = db.collection('documents');
+  var collection = db.collection('blogs');
   collection.find({}).toArray(function(err, docs) {
     assert.equal(err, null);
     console.log("Found the following records");
@@ -60,26 +59,28 @@ app.use(function(req, res, next) {
 });
 
 app.get('/api/blogs', (req, res) => {
-  MongoClient.connect(mongo_url, (err, db) => {
-    assert.equal(null, err);
-    findDocuments(db, (docs) => res.json(docs));
-    db.close();
+  blogdb.load((err) => {
+    if (err) {
+      console.log("Failed to load blogs from mongodb.");
+    } 
+    blogdb.getBlogList((err, blogs) => res.json(blogs)); 
   });
 });
 
 app.post('/api/blogs', (req, res) => {
-  MongoClient.connect(mongo_url, (err, db) => {
-    assert.equal(null, err);
+  blogdb.load((err) => {
+    if (err) {
+        console.log("Failed to load blogs from mongodb.");
+    } 
     var newBlog = {
       id: Date.now(),
       title: req.body.title,
       text: req.body.text,
     };
-    insertDocuments(db, newBlog, (err, result) => {
+    blogdb.addBlog(id, title, text, url, author, extras, (err, result) => {
       if (err) {
           console.error(err);
       } 
-      db.close();
     });
   });
 });
