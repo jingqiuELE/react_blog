@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-
+"use strict";
 var DB = require('./mongodb');
 
 
@@ -35,14 +35,14 @@ module.exports = function(options) {
 
   options = options || {};
 
-  var loaded = false;
+  let loaded = false;
   var db = new DB(options);
 
   var COLLECTION = 'blogs';
 
   this.load = function load(cb) {
     if (loaded) {
-      console.warn('blogs already loaded. Not reloading');
+      cb(null);
       return;
     }
     db.connect(function(err) {
@@ -78,17 +78,14 @@ module.exports = function(options) {
     })
   };
 
-  this.addBlog = function addBlog(id, title, content, url, author, extras, cb) {
+  this.addBlog = function addBlog(id, title, text, cb) {
     if (!loaded) {
       throw new Error('Cannot call "createBlog" on unloaded object');
     }
     db.create(COLLECTION, {
           id: id,
           title: title,
-          content: content,
-          url: url,
-          author: author,
-          extras: extras
+          text: text
     }, cb);
   };
 

@@ -18,15 +18,14 @@ var Blog = React.createClass({
   },
 
   render: function() {
-    var d = new Date(this.props.date);
     return (
       <div className="blog-post">
         <h2 className="blog-post-title">{this.props.title}</h2>
         <p className="blog-post-meta">
-            {d.toString()}
-            <a href='#'></a>
+          {this.props.date.toString()}
+          <a href='#'></a>
         </p>
-        <span dangerouslySetInnerHTML={this.rawMarkup()} />
+          <span dangerouslySetInnerHTML={this.rawMarkup()} />
       </div>
     );
   }
@@ -154,5 +153,5 @@ var BlogForm = React.createClass({
 
 ReactDOM.render(
   <BlogBox url="/api/blogs" pollInterval={10000} />,
-  document.getElementById('content')
+  document.getElementById('blogs')
 );

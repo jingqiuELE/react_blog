@@ -62,27 +62,25 @@ app.get('/api/blogs', (req, res) => {
   blogdb.load((err) => {
     if (err) {
       console.log("Failed to load blogs from mongodb.");
-    } 
+    }
     blogdb.getBlogList((err, blogs) => res.json(blogs)); 
-  });
+  }); 
 });
 
 app.post('/api/blogs', (req, res) => {
   blogdb.load((err) => {
     if (err) {
         console.log("Failed to load blogs from mongodb.");
-    } 
-    var newBlog = {
-      id: Date.now(),
-      title: req.body.title,
-      text: req.body.text,
-    };
-    blogdb.addBlog(id, title, text, url, author, extras, (err, result) => {
+    }
+    var id = req.body.id;
+    var title = req.body.title;
+    var text = req.body.text;
+    blogdb.addBlog(id, title, text, (err, result) => {
       if (err) {
-          console.error(err);
+        console.error(err);
       } 
     });
-  });
+  }); 
 });
 
 

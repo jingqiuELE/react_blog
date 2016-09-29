@@ -70,7 +70,7 @@ module.exports = function(options) {
       cb('Attempt to read from unknown collection "' + collection + '"');
       return;
     }
-    col.insert(document, { w: 1 }, cb);
+    col.insert(document, cb);
   };
 
   this.find = function find(collection, filter, cb) {
