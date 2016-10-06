@@ -18,11 +18,12 @@ var Blog = React.createClass({
   },
 
   render: function() {
+    var d = new Date(this.props.date);
     return (
       <div className="blog-post">
         <h2 className="blog-post-title">{this.props.title}</h2>
         <p className="blog-post-meta">
-          {this.props.date.toString()}
+          {d.toString()}
           <a href='#'></a>
         </p>
           <span dangerouslySetInnerHTML={this.rawMarkup()} />
@@ -57,7 +58,8 @@ var BlogBox = React.createClass({
       url: this.props.url,
       dataType: 'json',
       type: 'POST',
-      data: blog,
+      contentType: 'application/json',
+      data: JSON.stringify(blog),
       success: function(data) {
         this.setState({data: data});
       }.bind(this),

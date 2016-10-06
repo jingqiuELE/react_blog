@@ -79,6 +79,7 @@ app.post('/api/blogs', (req, res) => {
       if (err) {
         console.error(err);
       } 
+      blogdb.getBlogList((err, blogs) => res.json(blogs)); 
     });
   }); 
 });
