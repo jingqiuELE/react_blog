@@ -78,14 +78,16 @@ var BlogBox = React.createClass({
   },
   render: function() {
     return (
-      <div className="container">
-        <div className="blog-header">
-          <h1 className="blog-title">Blogs</h1>
-          <p className="lead blog-description">Blogs implemented using React</p>
+      <main>
+        <div className="container">
+          <div className="blog-header">
+            <h1 className="blog-title">Blogs</h1>
+            <p className="lead blog-description">Blogs implemented using React</p>
+          </div>
+          <BlogList data={this.state.data} />
+          <BlogForm onBlogSubmit={this.handleBlogSubmit} />
         </div>
-        <BlogList data={this.state.data} />
-        <BlogForm onBlogSubmit={this.handleBlogSubmit} />
-      </div>
+      </main>
     );
   }
 });
@@ -153,7 +155,41 @@ var BlogForm = React.createClass({
   }
 });
 
+var Header = React.createClass({
+  render: function() {
+    return (
+      <header>
+        <nav className="navbar navbar-light">
+          <div className="container-fluid">
+            <ul className="nav navbar-nav">
+              <li className="nav-item">
+                <a className="nav-link" href="#">login</a></li>
+              <li className="nav-item">
+                <a className="nav-link" href="#">register</a></li>
+            </ul> 
+            <form className="form-inline pull-xs-right">
+              <input className="form-control" type="search" name="q" placeholder="Search query"/>
+              <input className="btn btn-outline-success" type="submit" value="Go!"/>
+            </form>
+          </div>
+        </nav>
+      </header>
+    );
+  }
+});
+
+var MainBox = React.createClass({
+  render: function() {
+    return (
+      <div>
+         <Header />
+         <BlogBox url="/api/blogs" pollInterval={10000} />
+      </div>
+    );
+  }
+});
+
 ReactDOM.render(
-  <BlogBox url="/api/blogs" pollInterval={10000} />,
-  document.getElementById('blogs')
+  <MainBox />,
+  document.getElementById('body')
 );
